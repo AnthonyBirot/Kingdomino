@@ -7,6 +7,7 @@ project(kingdomino)
 add_executable(kingdomino
     src/main.cpp
     src/Game.cpp
+    src/Domino.cpp
     src/Player.cpp
 )
 

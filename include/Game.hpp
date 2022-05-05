@@ -7,23 +7,10 @@
 #include <vector>
 #include <map>
 
+#include "Domino.hpp"
 #include "Player.hpp"
 
 using namespace std;
-
-const int NBR_DOMINOS = 48;
-
-class Domino {
-   public: 
-    string _domino_number;
-    string _field_1;
-    string _crown_1;
-    string _field_2;
-    string _crown_2;
-
-    Domino();
-    Domino(string domino_number, string field_1, string crown_1, string field_2, string crown_2);
-};
 
 class Game {
    public:
