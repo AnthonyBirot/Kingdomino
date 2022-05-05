@@ -15,5 +15,11 @@ int main() {
     game.discard_dominos(erased_dominos);
     cout << "Number of dominos: " << game._dominos.size() << endl;
 
+    vector<string> domino_number{"2", "65", "45", "8", "22"};
+    game.choose_dominos(domino_number);
+    for (auto d : game._ordered_dominos) {
+        cout << "You choose: " << d.first << endl;
+    }
+
     return 0;
 }

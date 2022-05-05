@@ -5,8 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include <cstdlib>
-#include <unordered_map>
+#include <map>
 
 #include "Player.hpp"
 
@@ -30,13 +29,18 @@ class Game {
    public:
     Game();
 
+    //Init the game
     void setup_dominos();
     void set_players(vector<Color> color_players);
     void discard_dominos(vector<string> domino_numbers);
-    void start();
 
-    unordered_map<string, Domino> _dominos;
-    unordered_map<Color, Player> _players;
+    //Handle dominos
+    void choose_dominos(vector<string> domino_numbers);
+
+    map<string, Domino> _dominos;
+    map<Color, Player> _players;
+
+    map<string, Domino> _selected_dominos;
 };
 
 #endif
