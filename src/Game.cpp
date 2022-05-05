@@ -29,7 +29,7 @@ void Game::setup_dominos() {
 			domino._field_2 = row[3];
 			domino._crown_2 = row[4];
 
-			_dominos.insert({row[0], domino});
+			_dominos.insert({row[0], make_shared<Domino>(domino)});
 		}
 	} else {
 	    cout<<"Could not open the file\n";
@@ -41,7 +41,7 @@ void Game::set_players(vector<Color> color_players) {
 
 	if (color_players.size() > 1 && color_players.size() < 5) {
 		for (int i = 0; i < color_players.size(); i++) {
-			_players.insert({color_players[i], Player(color_players[i])});
+			_players[color_players[i]] = make_shared<Player>(*this, color_players[i]);
 		}
 	} else {
 		cout << "You need between 2 and 4 players to play at this game" << endl;

@@ -24,10 +24,10 @@ class Game {
     //Handle dominos
     void choose_dominos(vector<string> domino_numbers);
 
-    map<string, Domino> _dominos;
-    map<Color, Player> _players;
+    map<string, shared_ptr<Domino>> _dominos;
+    map<Color, shared_ptr<Player>> _players;
 
-    map<string, Domino> _selected_dominos;
+    map<string, shared_ptr<Domino>> _selected_dominos;
 };
 
 #endif
