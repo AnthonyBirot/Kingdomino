@@ -3,9 +3,10 @@
 
 #include <string>
 #include <memory>
+#include <map>
 
 #include "Domino.hpp"
-#include "Field.hpp"
+#include "Map.hpp"
 
 enum class Color {red, blue, green, yellow};
 
@@ -16,10 +17,13 @@ class Player{
     Player(Game& game, Color color);
 
     void select_domino(int choice);
+    void place_domino(int x1, int y1, int x2, int y2, Domino domino);
+    void place_castle(int x, int y);
+    int score();
 
     Color _color;
     pair<string, shared_ptr<Domino>> _domino;
-    Field _field;
+    Map _map;
 
    protected: 
     Game& _game;

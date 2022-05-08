@@ -9,6 +9,7 @@ add_executable(kingdomino
     src/Game.cpp
     src/Domino.cpp
     src/Player.cpp
+    src/Map.cpp
 )
 
 include_directories(include)
