@@ -1,6 +1,7 @@
 #ifndef __PLAYER_HPP__
 #define __PLAYER_HPP__
 
+#include <iostream>
 #include <string>
 #include <memory>
 #include <map>
@@ -17,7 +18,7 @@ class Player{
     Player(Game& game, Color color);
 
     void select_domino(int choice);
-    void place_domino(int x1, int y1, int x2, int y2, Domino domino);
+    void place_domino(int x1, int y1, int x2, int y2, shared_ptr<Domino> domino);
     void place_castle(int x, int y);
     int score();
 

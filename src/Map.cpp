@@ -1,7 +1,7 @@
 #include "Map.hpp"
 
 Map::Map() {
-    _grid.resize(DIMENSION);
+    _grid.resize(DIMENSION, vector<Case>(DIMENSION));
 }
 
 bool Map::is_occuped(int x, int y) {
@@ -12,7 +12,7 @@ bool Map::is_occuped(int x, int y) {
     return (_grid[x][y]._occuped);
 }
 
-bool Map::pose(int x1, int y1, int x2, int y2, Domino domino){
+bool Map::pose(int x1, int y1, int x2, int y2, shared_ptr<Domino> domino){
     // Check if there already is a domino on x1y1 or x2y2
     if (is_occuped(x1, y1) || is_occuped(x2, y2)) {
         cout << "There already is a domino in this pose" << endl;
@@ -43,13 +43,36 @@ bool Map::pose(int x1, int y1, int x2, int y2, Domino domino){
         possible_y.insert(possible_y.end(), {y1-1, y1, y1+1});    
     }
 
-    //TO DO : Delete useless couple (diagonales)
     vector<pair<int, int>> side;
     for (int x : possible_x) {
-        for(int y : possible_y) {
-            if (!((x == x1 && y == y1) || (x == x2 && y == y2))){
-                side.push_back(make_pair(x, y));   
-            }
+        //Test if x is in the grid
+        if (x >= 0 && x < DIMENSION) {
+            for(int y : possible_y) {
+                //Test if y is in the grid
+                if (y >= 0 && y < DIMENSION) {
+                    //Test if (x,y) is one of the domino index
+                    if (!((x == x1 && y == y1) || (x == x2 && y == y2))) {
+                        // //Delete diagonals couple
+                        if (orientation == "y+" || orientation == "y-") {
+                            if (y != y1 && y != y2) {
+                                if (x==x1) {
+                                    side.push_back(make_pair(x, y));
+                                }
+                            } else {
+                                side.push_back(make_pair(x, y));
+                            }
+                        } else if (orientation == "x+" || orientation == "x-") {
+                            if (x != x1 && x != x2) {
+                                if (y==y1) {
+                                    side.push_back(make_pair(x, y));
+                                }
+                            } else {
+                                side.push_back(make_pair(x, y));
+                            }
+                        }
+                    }
+                }
+            }            
         }
     }
 
@@ -76,11 +99,11 @@ bool Map::pose(int x1, int y1, int x2, int y2, Domino domino){
             if (orientation == "y+") {
 
                 if (couple.second == y1-1 || couple.second == y1) {
-                    if (test_field == domino._field_1 || test_field == "castle"){
+                    if (test_field == domino->_field_1 || test_field == "castle"){
                         side_occuped_same_field.push_back(couple);
                     }
                 } else {
-                    if (test_field == domino._field_2){
+                    if (test_field == domino->_field_2){
                         side_occuped_same_field.push_back(couple);
                     }
                 }
@@ -90,11 +113,11 @@ bool Map::pose(int x1, int y1, int x2, int y2, Domino domino){
             else if (orientation == "y-") {
 
                 if (couple.second == y1+1 || couple.second == y1) {
-                    if (test_field == domino._field_1){
+                    if (test_field == domino->_field_1){
                         side_occuped_same_field.push_back(couple);
                     }
                 } else {
-                    if (test_field == domino._field_2){
+                    if (test_field == domino->_field_2){
                         side_occuped_same_field.push_back(couple);
                     }
                 }   
@@ -104,11 +127,11 @@ bool Map::pose(int x1, int y1, int x2, int y2, Domino domino){
             else if (orientation == "x+") {
 
                 if (couple.first == x1-1 || couple.first == x1) {
-                    if (test_field == domino._field_1){
+                    if (test_field == domino->_field_1){
                         side_occuped_same_field.push_back(couple);
                     }
                 } else {
-                    if (test_field == domino._field_2){
+                    if (test_field == domino->_field_2){
                         side_occuped_same_field.push_back(couple);
                     }
                 }   
@@ -118,11 +141,11 @@ bool Map::pose(int x1, int y1, int x2, int y2, Domino domino){
             else if (orientation == "x-") {
 
                 if (couple.first == x1+1 || couple.first == x1) {
-                    if (test_field == domino._field_1){
+                    if (test_field == domino->_field_1){
                         side_occuped_same_field.push_back(couple);
                     }
                 } else {
-                    if (test_field == domino._field_2){
+                    if (test_field == domino->_field_2){
                         side_occuped_same_field.push_back(couple);
                     }
                 }   
@@ -142,12 +165,12 @@ bool Map::pose(int x1, int y1, int x2, int y2, Domino domino){
 
     //TO DO : Check the global size of the map (5 fields by line and column max)
 
-    _grid[x1][y1]._field = domino._field_1;
-    _grid[x1][y1]._score = domino._crown_1;
+    _grid[x1][y1]._field = domino->_field_1;
+    _grid[x1][y1]._score = domino->_crown_1;
     _grid[x1][y1]._occuped = true;
     
-    _grid[x2][y2]._field = domino._field_2;
-    _grid[x2][y2]._score = domino._crown_2;
+    _grid[x2][y2]._field = domino->_field_2;
+    _grid[x2][y2]._score = domino->_crown_2;
     _grid[x2][y2]._occuped = true;
 
     return true;

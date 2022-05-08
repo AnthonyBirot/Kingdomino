@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <memory>
 #include <vector>
 
 #include "Domino.hpp"
@@ -25,7 +26,7 @@ class Map {
     Map();
 
     bool is_occuped(int x, int y);
-    bool pose(int x1, int y1, int x2, int y2, Domino domino);
+    bool pose(int x1, int y1, int x2, int y2, shared_ptr<Domino> domino);
 
     vector<vector<Case>> _grid;
 };

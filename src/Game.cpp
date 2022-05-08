@@ -66,14 +66,17 @@ void Game::choose_dominos(vector<string> domino_numbers) {
 		}
 	}
 
-	//Test if we have a good numbers of dominos
-	if ((_players.size() == 3 || _players.size() == 4) && _selected_dominos.size() != 3){
+	//Test if we have a good numbers of dominos selected to correspond at the number of players
+	if ((_players.size() == 2 || _players.size() == 4) && _selected_dominos.size() != 4){
 		_selected_dominos.clear();
-		cout << "Choose 3 dominos to play with 3 or 4 players" << endl;
+		cout << "Choose 4 dominos to play with 2 or 4 players" << endl;
 		return;
-	} else if (_players.size() == 2 && _selected_dominos.size() != 4) {
+	} else if (_players.size() == 3 && _selected_dominos.size() != 3) {
 		_selected_dominos.clear();
-		cout << "Choose 4 dominos to play with 2 players" << endl;
+		cout << "Choose 3 dominos to play with 3 players" << endl;
 		return;
 	}
+
+	//Delete dominos selected from the main dominos list
+	discard_dominos(domino_numbers);
 }
